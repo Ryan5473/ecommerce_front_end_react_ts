@@ -70,3 +70,4 @@ npm run dev
 ### Shopping Bag
 
 ![FC7](https://github.com/athulrajhere/FlowyCart-ecommerce-react-redux/assets/47721687/112643db-83fe-4d73-96a2-0f0a29f363ad)
+# ecommerce_front_end_react_ts
