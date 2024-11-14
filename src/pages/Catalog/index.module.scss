@@ -14,10 +14,11 @@
       justify-content: center;
       align-items: center;
       background-color: transparent;
+
       .icon {
         font-size: 24px;
         margin-top: 6px;
-        color: $c-title;
+        color: #4a90e2; // Changed color to a blue shade
 
         @media (min-width: 496px) {
           font-size: 56px;
@@ -27,11 +28,11 @@
 
     .title {
       display: flex;
-      font-family: $font-f-title;
-      font-weight: $font-w-700;
+      font-family: 'Arial, sans-serif'; // Changed font family
+      font-weight: 700; // Using a numerical value for font weight
       font-size: 24px;
-      letter-spacing: $ls-secondary;
-      color: $c-title;
+      letter-spacing: 0.5px; // Adjust letter spacing
+      color: #333333; // Changed color to dark gray
 
       @media (min-width: 496px) {
         justify-content: center;
@@ -44,11 +45,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: $font-f-title;
-    font-weight: $font-w-700;
+    font-family: 'Arial, sans-serif'; // Changed font family
+    font-weight: 700; // Using a numerical value for font weight
     font-size: 24px;
-    letter-spacing: $ls-secondary;
-    color: $c-title;
+    letter-spacing: 0.5px; // Adjust letter spacing
+    color: #4a90e2; // Changed color to match the icon color
     line-height: 0.3;
     margin: 1rem;
 
@@ -62,6 +63,7 @@
     margin-bottom: 0.5rem;
     font-size: 2.4rem;
     text-transform: uppercase;
+    color: #777777; // Changed color to a lighter gray
   }
 
   .productList {

@@ -18,11 +18,14 @@ const Footer = () => {
   });
 
   const isCollectionPage = location.pathname.includes("collections");
-
+const hidde_Footer =location.pathname="/dashboard"
+if (hidde_Footer) {
+  return null; 
+}
   return (
     <footer
       className={`${styles.footer} ${
-        isCollectionPage && isBigScreen
+        isCollectionPage && isBigScreen && hidde_Footer
           ? styles.is_collection_page_b
           : styles.is_collection_page_s
       }`}

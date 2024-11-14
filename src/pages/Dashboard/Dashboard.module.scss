@@ -1,0 +1,73 @@
+.dashboardContainer {
+  display: flex;
+  height: calc(100vh - 60px); // Adjust for navbar height (assumed height of 60px)
+}
+
+.sidebar {
+  width: 200px; // Width of the sidebar
+  background-color: #f4f4f4; // Background color for the sidebar
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: relative; // Keeps the sidebar within the dashboard
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; // Center text horizontally
+}
+
+.sidebar li:hover {
+  background-color: #e0e0e0; // Background color on hover
+}
+
+.content {
+  flex: 1; // Takes up all remaining space
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; // Align items at the start instead of center
+  padding: 20px; // Add some padding for better spacing
+  margin-top: 40px; // Increased margin to push the content down further
+  overflow-y: auto; // Allow vertical scrolling if content exceeds height
+}
+
+.tableContainer {
+  margin-top: 20px; // Space above the table
+  width: 80%; // Width of the table
+  overflow-x: auto; // Allow horizontal scrolling if necessary
+}
+
+table {
+  width: 100%; // Take full width
+  border-collapse: collapse; // Remove space between cells
+}
+
+th,
+td {
+  border: 1px solid #ccc; // Border for cells
+  padding: 8px;
+  text-align: left; // Left align text
+}
+
+th {
+  background-color: #f2f2f2; // Header background color
+}
+
+// Optional: Add media queries for responsiveness
+@media (max-width: 768px) {
+  .sidebar {
+    width: 150px; // Reduce width for smaller screens
+  }
+
+  .tableContainer {
+    width: 100%; // Full width for table on smaller screens
+  }
+}

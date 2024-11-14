@@ -40,6 +40,7 @@ const Navbar: React.FC<NavBarProps> = ({ handleShow }) => {
 
     return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
   }, []);
+  
   const navStyles = hasScrolled
     ? `${styles.nav} ${styles.hasScrolled}`
     : styles.nav;
@@ -48,18 +49,24 @@ const Navbar: React.FC<NavBarProps> = ({ handleShow }) => {
     <nav className={navStyles}>
       <div className={styles.container_bottom}>
         <Link to="/" className={styles.title}>
-          Flowy Cart
+          E-commerce
         </Link>
         <ul className={styles.links}>
           {navData.map((option) => {
             return (
-              <li>
+              <li key={option.name}>
                 <NavLink to={`/catalog/${option.name}`} className={styles.link}>
                   {option.name}
                 </NavLink>
               </li>
             );
           })}
+          {/* Ajoutez le lien vers le tableau de bord ici */}
+          <li>
+            <NavLink to="/dashboard" className={styles.link}>
+              Dashboard
+            </NavLink>
+          </li>
         </ul>
         <ul className={styles.icons_menu}>
           <li>

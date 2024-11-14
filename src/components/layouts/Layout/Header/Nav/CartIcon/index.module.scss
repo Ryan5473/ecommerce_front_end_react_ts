@@ -3,9 +3,11 @@
   border-radius: 999rem;
   display: flex;
   align-items: center;
+  background-color: #f9f9f9; /* Light gray background for the icon */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 
   &:hover {
-    background-color: $back-c-highlight;
+    background-color: #ffeaa7; /* Light yellow on hover for better visibility */
   }
 }
 
@@ -13,17 +15,28 @@
   position: relative;
   top: 0;
   right: 0;
-  width: 0;
-  height: 0;
-  color: #ff5a1e;
-  background: $back-c-detail;
+  width: 2rem; /* Ensure the amount container is visible */
+  height: 2rem; /* Adjust height for better visibility */
+  color: #ffffff; /* White text color for contrast */
+  background: #ff5a1e; /* Bright orange background */
+  border-radius: 50%; /* Make it circular */
+  display: flex; /* Center align text */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
 
   @media (min-width: 768px) {
+    /* Adjustments for larger screens if needed */
+    width: 2.5rem; /* Slightly larger on bigger screens */
+    height: 2.5rem; /* Slightly larger on bigger screens */
   }
 }
 
 .no_items {
-  display: none;
+  display: flex; /* Change to flex for better visibility when shown */
+  justify-content: center; /* Center the text */
+  align-items: center; /* Center vertically */
+  color: #666666; /* Medium gray color for the 'no items' message */
+  font-size: 14px; /* Slightly larger font for better readability */
 }
 
 .bump {

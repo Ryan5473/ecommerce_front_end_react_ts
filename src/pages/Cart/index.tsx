@@ -14,17 +14,48 @@ import { TbTruckReturn } from "react-icons/tb";
 import Spinner from "../../components/components/Spinner";
 
 const Cart = () => {
-  const { cartItems, isLoading } = useAppSelector(
-    (state) => state.cart
-  );
+  const { cartItems, isLoading } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
 
   const totalPrice = cartItems.reduce(
-    (a, c) => a + c.quantity * c.product.price,
+    (total, item) => total + item.quantity * item.product.price,
     0
   );
+
+  const handlePlaceOrder = async () => {
+    const orderData = {
+      products: cartItems.map((item) => ({
+        productId: item.product.id,
+        name: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+      })),
+      customerEmail: "johndoe@example.com", // Replace with actual customer email input
+    };
+
+    try {
+      const response = await fetch("http://localhost:4000/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to place order. Please try again.");
+      }
+
+      const responseData = await response.json();
+      console.log("Order placed successfully:", responseData);
+      dispatch(cartReset()); // Reset the cart after placing the order
+      navigate("/confirmation"); // Navigate to a confirmation page
+    } catch (error) {
+      console.error("Failed to place order:", error);
+      alert(error.message); // Provide user feedback on error
+    }
+  };
 
   if (isLoading) return <Spinner />;
 
@@ -46,78 +77,68 @@ const Cart = () => {
               >
                 Empty Cart
               </div>
-              {cartItems.map((item) => {
-                return (
-                  <div className={styles.cartCardWrapper}>
-                    <Link
-                      to={`/products/${item.product.id}`}
-                      className={styles.cartCardContainer}
-                    >
-                      <img
-                        src={item.product.image}
-                        className={styles.cartCardImage}
-                        alt={item.product.title}
-                      />
-                      <div className={styles.cartCardDetails}>
-                        <div className={styles.cartCardLeft}>
+              {cartItems.map((item) => (
+                <div className={styles.cartCardWrapper} key={item.product.id}>
+                  <Link
+                    to={`/products/${item.product.id}`}
+                    className={styles.cartCardContainer}
+                  >
+                    <img
+                      src={item.product.image}
+                      className={styles.cartCardImage}
+                      alt={item.product.title}
+                    />
+                    <div className={styles.cartCardDetails}>
+                      <div className={styles.cartCardLeft}>
+                        <div className={styles.title}>{item.product.title}</div>
+                        <div className={styles.size}>Size: 36</div>
+                        <div className={styles.price}>
+                          $ {item.product.price.toFixed(2)}
+                        </div>
+                        <div className={styles.return}>
+                          <div className={styles.iconContainer}>
+                            <TbTruckReturn className={styles.icon} />
+                          </div>
                           <div className={styles.title}>
-                            {item.product.title}
+                            14 days return available
                           </div>
-                          <div className={styles.size}>Size: 36</div>
-                          <div className={styles.price}>
-                            $ {item.product.price}
+                        </div>
+                        <div className={styles.delivery}>
+                          <div className={styles.iconContainer}>
+                            <MdCheck className={styles.icon} />
                           </div>
-                          <div className={styles.return}>
-                            <div className={styles.iconContainer}>
-                              <TbTruckReturn className={styles.icon} />
-                            </div>
-                            <div className={styles.title}>
-                              14 days return available
-                            </div>
-                          </div>
-                          <div className={styles.delivery}>
-                            <div className={styles.iconContainer}>
-                              <MdCheck className={styles.icon} />
-                            </div>
-                            <div className={styles.title}>
-                              Delivery by 2 days
-                            </div>
+                          <div className={styles.title}>
+                            Delivery by 2 days
                           </div>
                         </div>
                       </div>
-                    </Link>
-                    <div className={styles.cartCardRight}>
-                      <div className={styles.cartCardRightWrapper}>
-                        <Button
-                          className={styles.button}
-                          onClick={() =>
-                            dispatch(reduceItemFromCart(item.product))
-                          }
-                        >
-                          -
-                        </Button>
-                        <div className={styles.counter}>{item.quantity}</div>
-                        <Button
-                          className={styles.button}
-                          onClick={() =>
-                            dispatch(incrementItemFromCart(item.product))
-                          }
-                        >
-                          +
-                        </Button>
-                      </div>
+                    </div>
+                  </Link>
+                  <div className={styles.cartCardRight}>
+                    <div className={styles.cartCardRightWrapper}>
                       <Button
-                        className={styles.cartCardDelete}
-                        onClick={() =>
-                          dispatch(removeItemFromCart(item.product.id))
-                        }
+                        className={styles.button}
+                        onClick={() => dispatch(reduceItemFromCart(item.product))}
                       >
-                        <MdDelete className={styles.icon} />
+                        -
+                      </Button>
+                      <div className={styles.counter}>{item.quantity}</div>
+                      <Button
+                        className={styles.button}
+                        onClick={() => dispatch(incrementItemFromCart(item.product))}
+                      >
+                        +
                       </Button>
                     </div>
+                    <Button
+                      className={styles.cartCardDelete}
+                      onClick={() => dispatch(removeItemFromCart(item.product.id))}
+                    >
+                      <MdDelete className={styles.icon} />
+                    </Button>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
             <div className={styles.cartRight}>
               <div className={styles.coupon}>
@@ -134,7 +155,7 @@ const Cart = () => {
                 <div className={styles.title}>Price Details</div>
                 <div className={styles.priceContent}>
                   <div className={styles.title}>Total MRP</div>
-                  <div className={styles.price}>{totalPrice.toFixed(2)}</div>
+                  <div className={styles.price}>$ {totalPrice.toFixed(2)}</div>
                 </div>
                 <div className={styles.priceContent}>
                   <div className={styles.title}>Platform Fee</div>
@@ -147,9 +168,11 @@ const Cart = () => {
               </div>
               <div className={styles.totalContent}>
                 <div className={styles.title}>Total Amount</div>
-                <div className={styles.price}>{totalPrice.toFixed(2)}</div>
+                <div className={styles.price}>$ {totalPrice.toFixed(2)}</div>
               </div>
-              <Button className={styles.button}>Place Order</Button>
+              <Button className={styles.button} onClick={handlePlaceOrder}>
+                Place Order
+              </Button>
             </div>
           </div>
         ) : (

@@ -4,5 +4,7 @@ export const navData = [
   { id: 2, name: "Women", value: "Women", to: "women" },
   { id: 3, name: "Electronics", value: "Electronics", to: "electronics" },
   { id: 4, name: "Jewelery", value: "Jewelery", to: "jewelry" },
+  { id: 5, name: "Dashboard", value: "Dashboard", to: "dashboard" },
+
 ];
 export const sizeData = ["XS", "SM", "M", "L", "XL", "XXL"];
