@@ -33,7 +33,7 @@ if (hidde_Footer) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <div className={styles.nav_wrapper}>
-            <div className={styles.nav_title}>Flowy Cart</div>
+            <div className={styles.nav_title}>e_commerce</div>
             <div className={styles.subTitle}>
               Unleash your fashion. Find your flow.
             </div>
